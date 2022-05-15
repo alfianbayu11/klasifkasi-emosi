@@ -1,0 +1,60 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+
+<script src="https://unpkg.com/htmx.org@0.0.4"></script>
+<script>
+    function timeRefresh(time) {
+        setTimeout("location.reload(true);", time);
+    }
+</script>
+<form hx-post='/submit' hx-trigger="submit">
+    <div class="form-group">
+        <label for="Dosen">Dosen</label>
+        <select name="dosen" class="form-control" required>
+            <option value="">Pilih</option>
+            <option value="Nurlaeli, M.Pd. (A,B)">Nurlaeli, M.Pd. (A,B)</option>
+            <option value="M. Sofyan Firmansyah, S.S.M. (C,D)">M. Sofyan Firmansyah, S.S.M. (C,D)</option>
+            <option value="Dr. Tuharso, S.Ag., MPI.">Dr. Tuharso, S.Ag., MPI.</option>
+            <option value="Ginanjar Wiro Sasmito, M.Kom.">Ginanjar Wiro Sasmito, M.Kom.</option>
+            <option value="Dairoh, M.Sc.">Dairoh, M.Sc.</option>
+            <option value="Riszki Wijayatun Pratiwi, S.Kom., M.Cs.">Riszki Wijayatun Pratiwi, S.Kom., M.Cs.
+            </option>
+            <option value="Romi Muharyono, S.Ag.">Romi Muharyono, S.Ag.</option>
+            <option value="Ary Herijanto, M.M.Si.">Ary Herijanto, M.M.Si.</option>
+            <option value="Dega Surono Wibowo, S.T., M.Kom.">Dega Surono Wibowo, S.T., M.Kom.</option>
+            <option value="M. Nishom, M.Kom.">M. Nishom, M.Kom.</option>
+            <option value="Firdaus Nur Sugiarto, S.Tr.Kom. .">Firdaus Nur Sugiarto, S.Tr.Kom. .</option>
+            <option value="Taufiq Abidin, M.Kom.">Taufiq Abidin, M.Kom.</option>
+            <option value="Slamet Wiyono, M.Eng.">Slamet Wiyono, M.Eng.</option>
+            <option value="Dyah Apriliani, S.T., M.Kom.">Dyah Apriliani, S.T., M.Kom.</option>
+            <option value="Prasetyo Budi Mulyo, S.Sos.">Prasetyo Budi Mulyo, S.Sos.</option>
+            <option value="Rosid Mustafa, M.Kom.">Rosid Mustafa, M.Kom.</option>
+            <option value="Hendrawan Aprilia A, S.T.">Hendrawan Aprilia A, S.T.</option>
+            <option value="Sharfina Handayani, M.Kom.">Sharfina Handayani, M.Kom.</option>
+            <option value="Priyanto Tamami, S.Kom.">Priyanto Tamami, S.Kom.</option>
+            <option value="Ardi Susanto, S.Kom., M.Cs.">Ardi Susanto, S.Kom., M.Cs.</option>
+            <option value="M. Fikri Hidayatullah, S.T., M.Kom.">M. Fikri Hidayatullah, S.T., M.Kom.</option>
+            <option value="Dwi Intan Af'idah, S.T., M.Kom.">Dwi Intan Af'idah, S.T., M.Kom.</option>
+            <option value="Hepatika Zidny Ilmadina, S.Pd., M.Kom.">Hepatika Zidny Ilmadina, S.Pd., M.Kom.
+            </option>
+        </select>
+    </div>
+    <input onclick="timeRefresh(3000);" type="submit" class="btn-info" value="Kirim" hx-trigger="load">
+
+</form>
+<div class="panel-body">
+    <p>Berikut Merupakan Hasil Rekap dari keseluruhan data</p>
+
+    <img src="{{url_for('static', filename ='img/rekapdosen.png')}}" alt="">
+
+    <ul class="list-group">
+        <li class="list-group-item">Keterangan</li>
+
+        <li class="list-group-item list-group-item-danger">Sentimen 0 menunjukan Kurang</li>
+        <li class="list-group-item list-group-item-info">Sentimen 1 menunjukan Cukup</li>
+        <li class="list-group-item list-group-item-success">Sentimen 2 menunjukan Baik</li>
+        <li class="list-group-item list-group-item-primary">Sentimen 3 menunjukan Sangat Baik</li>
+    </ul>
+</div>
+
+{% endblock %}

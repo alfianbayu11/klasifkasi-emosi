@@ -1,0 +1,57 @@
+<!-- Sidebar -->
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url_for('home')}}">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-grin-stars"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">Klasifikasi Emosi</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item active">
+        <a class="nav-link" href="{{url_for('home')}}">
+            <i class="fas fa-home"></i>
+            <span>Home</span></a>
+        <!-- Nav Item - Dashboard -->
+        <!-- <li class="nav-item dropdown <?php echo $this->uri->segment(2) == 'products' ? 'active' : '' ?>">
+        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-fw fa-boxes"></i>
+            <span>Kategori</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+            <a class="dropdown-item" href="<?php echo base_url('kategori/gundam') ?>">Gundam</a>
+            <a class="dropdown-item" href="<?php echo site_url('kategori/chibi') ?>">chibi</a>
+            <a class="dropdown-item" href="<?php echo site_url('kategori/nendoroid') ?>">nendoroid</a>
+        </div> -->
+
+        <a class="nav-link" href="{{url_for('edom')}}">
+            <i class="fas fa-chalkboard-teacher"></i>
+
+            <span>Edom</span></a>
+
+
+    </li>
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+    <li class="nav-item">
+        <a class="nav-link" href="{{url_for('about')}}">
+            <i class="fas fa-fw fa-user"></i>
+            <span>About</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+</ul>
+<!-- End of Sidebar -->

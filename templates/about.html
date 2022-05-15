@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include 'header.html' %}
+</head>
+
+<body id="page-top">
+
+
+
+    {% include 'sidebar.html' %}
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+            {% include 'topbar.html' %}
+            <!-- DataTables -->
+
+            <head>
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <style>
+                    body {
+                        background-color: #e8e8e8;
+                    }
+
+                    .foto {
+                        padding: 20px;
+                        margin-left: 30px;
+                        margin-top: 10px;
+                    }
+
+                    tbody {
+                        font-size: 20px;
+                        font-weight: 300;
+                        color: black;
+                    }
+
+                    .biodata {
+                        margin-top: 30px;
+                    }
+
+                    body {
+                        font-family: Arial, Helvetica, sans-serif;
+                        margin: 0;
+                    }
+
+                    html {
+                        box-sizing: border-box;
+                    }
+
+                    *,
+                    *:before,
+                    *:after {
+                        box-sizing: inherit;
+                    }
+
+                    .column {
+                        float: center;
+                        width: 33.3%;
+                        margin-bottom: 16px;
+                        padding: 0 8px;
+                    }
+
+                    .card {
+                        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                        margin: 8px;
+                    }
+
+                    .about-section {
+                        padding: 50px;
+                        text-align: justify;
+                        background-color: #8097c8;
+                        color: white;
+                    }
+
+                    .container {
+                        padding: 0 16px;
+                    }
+
+                    .container::after,
+                    .row::after {
+                        content: "";
+                        clear: both;
+                        display: table;
+                    }
+
+                    .title {
+                        color: grey;
+                    }
+
+                    .button {
+                        border: none;
+                        outline: 0;
+                        display: inline-block;
+                        padding: 8px;
+                        color: white;
+                        background-color: #000;
+                        text-align: center;
+                        cursor: pointer;
+                        width: 100%;
+                    }
+
+                    .button:hover {
+                        background-color: #555;
+                    }
+
+                    @media screen and (max-width: 650px) {
+                        .column {
+                            width: 100%;
+                            display: block;
+                        }
+                    }
+                </style>
+            </head>
+
+            <body>
+
+                <div class="about-section">
+                    <h1>About</h1>
+                    <p>Website ini bersifat simulasi program saat mengisikan edom. Tujuan dari website ini adalah
+                        menentukan emosi
+                        dengan cara menganalisis dan mengklasifikasikan teks yang ditulis kedalam
+                        4 jenis emosi yaitu baik sekali, baik, cukup, dan kurang. Klasifikasi emosi
+                        di EDOM diperlukan karena interaksi dalam EDOM merupakan interaksi
+                        yang diungkapkan secara verbal yang berupa kata atau kalimat sehingga
+                        perlu dilakukan penafsiran terhadap makna bahasa yang disampaikan agar
+                        dapat mengetahui emosi seseorang dan tidak salah paham ketika melakukan
+                        interaksi dengan orang lain. Penelitian terhadap klasifikasi emosi di EDOM
+                        ini dapat memberikan manfaat untuk mencari suatu informasi mengenai
+                        sikap dan emosi seseorang terhadap dosen.</p>
+                    <!-- <p>Website ini bersifat simulasi program saat mengisikan edom</p> -->
+                </div>
+
+                <body>
+                    <a>
+                        <h3 class="text-center mt-3">My Profile</h3>
+                    </a>
+
+                    <div class="container" id="kotak">
+                        <div class="card kartu">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="foto">
+                                        <img src="{{url_for('static', filename ='img/profile/default.jpg')}}" ?
+                                            class="img-thumbnail">
+
+                                    </div>
+                                </div>
+                                <div class="col-md-8 kertas-biodata">
+                                    <div class="biodata">
+                                        <table width="100%" border="0">
+                                            <tbody>
+                                                <tr>
+                                                    <td valign="top">
+                                                        <table border="0" width="100%"
+                                                            style="padding-left: 2px; padding-right: 13px;">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td width="25%" valign="top" class="textt">Nama</td>
+                                                                    <td width="2%">:</td>
+                                                                    <td style=" font-weight:bold">Alfian Bayu Samudra
+                                                                    </td>
+                                                                <tr>
+                                                                    <td class="textt">Jenis Kelamin</td>
+                                                                    <td>:</td>
+                                                                    <td>Laki-Laki</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="textt">Tempat Lahir</td>
+                                                                    <td>:</td>
+                                                                    <td>Bojonegoro</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="textt">Tanggal Lahir</td>
+                                                                    <td>:</td>
+                                                                    <td>20/06/2000</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="textt">NIM</td>
+                                                                    <td>:</td>
+                                                                    <td>18090109</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td valign="top" class="textt">Prodi</td>
+                                                                    <td valign="top">:</td>
+                                                                    <td>Teknik Informatika</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <center>
+                        <button type='button' class='btn btn-primary center-block' id="btn_show"> Show</button>
+                        <button type='button' class='btn btn-primary center-block' id="btn_hide"> Hide</button>
+                        <button type='button' class='btn btn-primary center-block' id="btn_blue"> Biru</button>
+                        <button type='button' class='btn btn-primary center-block' id="btn_black"> Hitam</button>
+                    </center>
+
+
+                    <!-- /.container-fluid -->
+
+                    <!-- Sticky Footer -->
+                    {% include 'footer.html' %}
+
+        </div>
+        <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+</body>
+<script>
+    $(document).ready(function () {
+        $("#btn_hide").click(function () {
+            $("#kotak").hide(2000);
+        });
+
+        $("#btn_show").click(function () {
+            $("#kotak").show(2000);
+        });
+
+        $("#btn_blue").click(function () {
+            $("h3").css("color", "blue");
+        });
+
+        $("#btn_black").click(function () {
+            $("h3").css("color", "black");
+        });
+    });
+</script>
+
+</html>

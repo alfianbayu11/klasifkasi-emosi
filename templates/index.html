@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include 'header.html' %}
+</head>
+<script src="https://unpkg.com/htmx.org@0.0.4"></script>
+
+<body id="page-top">
+
+
+
+    {% include 'sidebar.html' %}
+
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+            {% include 'topbar.html' %}
+            <!-- DataTables -->
+            <h5>Form Edom</h5>
+
+            <form action="{{ url_for('predict') }}" method="POST">
+                <div class="form-group">
+                    <label for="Semester">Semester</label>
+                    <select name="semester" class="form-control" required>
+                        <!-- hx-get="/mk" hx-target="#mk"
+                        hx-indicator=".htmx-indicator" -->
+                        <option value="">Pilih</option>
+                        <option value="Semester 1">Semester 1</option>
+                        <option value="Semester 2">Semester 2</option>
+                        <option value="Semester 3">Semester 3</option>
+                        <option value="Semester 4">Semester 4</option>
+                        <option value="Semester 5">Semester 5</option>
+                        <option value="Semester 6">Semester 6</option>
+                        <option value="Semester 7">Semester 7</option>
+                        <option value="Semester 8">Semester 8</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="Mata Kuliah">Mata Kuliah</label>
+                    <select name="mk" class="form-control" required>
+                        <!-- {% for mk in list_of_mk %}
+                        <option value="{{ mk }}">{{ mk }}</option>
+
+                        {% endfor %} -->
+                        <option value="">Pilih</option>
+                        <option value="Desain Grafis dan Multimedia">Desain Grafis dan Multimedia</option>
+                        <option value="Mobile Programming">Mobile Programming </option>
+                        <option value="Komputasi dan Aplikasi Cloud">Komputasi dan Aplikasi Cloud</option>
+                        <option value="Framework Programming">Framework Programming</option>
+                        <option value="Data Warehouse">Data Warehouse</option>
+                        <option value="Pengujian Perangkat Lunak.">Pengujian Perangkat Lunak.</option>
+                        <option value="Machine Learning">Machine Learning</option>
+                        <option value="Pemrograman Sistem Cerdas 1">Pemrograman Sistem Cerdas 1</option>
+                        <option value="Leadership">Leadership</option>
+                        <option value="Sistem Informasi Manajemen">Sistem Informasi Manajemen</option>
+                        <option value="Pengolahan Citra Digital">Pengolahan Citra Digital</option>
+                        <option value="Statistika">Statistika</option>
+                        <option value="Enterprise Resource Planning">Enterprise Resource Planning</option>
+                        <option value="Matematika Numerik">Matematika Numerik</option>
+                        <option value="Sistem Basis Data 1">Sistem Basis Data 1</option>
+                        <option value="Pemrograman Web 1">Pemrograman Web 1</option>
+                        <option value="Jaringan Komputer 1">Jaringan Komputer 1</option>
+                        <option value="Pemrograman Komputer 1">Pemrograman Komputer 1</option>
+                        <option value="Sistem Operasi">Sistem Operasi</option>
+                        <option value="Algoritma dan Struktur Data 1">Algoritma dan Struktur Data 1</option>
+                        <option value="Organisasi & Arsitektur Komputer.">Organisasi & Arsitektur Komputer.</option>
+                        <option value="Logika Informatika">Logika Informatika</option>
+                        <option value="Kalkulus">Kalkulus</option>
+                        <option value="Konsep Teknologi Informasi">Konsep Teknologi Informasi</option>
+                        <option value="Pendidikan Agama">Pendidikan Agama</option>
+                        <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+                        <option value="Bahasa Inggris 1">Bahasa Inggris 1</option>
+                        <option value="Manajemen Projek IT">Manajemen Projek IT</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="Dosen">Dosen</label>
+                    <select name="dosen" class="form-control" required>
+                        <option value="">Pilih</option>
+                        <option value="Nurlaeli, M.Pd. (A,B)">Nurlaeli, M.Pd. (A,B)</option>
+                        <option value="M. Sofyan Firmansyah, S.S.M. (C,D)">M. Sofyan Firmansyah, S.S.M. (C,D)
+                        </option>
+                        <option value="Dr. Tuharso, S.Ag., MPI.">Dr. Tuharso, S.Ag., MPI.</option>
+                        <option value="Ginanjar Wiro Sasmito, M.Kom.">Ginanjar Wiro Sasmito, M.Kom.</option>
+                        <option value="Dairoh, M.Sc.">Dairoh, M.Sc.</option>
+                        <option value="Riszki Wijayatun Pratiwi, S.Kom., M.Cs.">Riszki Wijayatun Pratiwi, S.Kom.,
+                            M.Cs.
+                        </option>
+                        <option value="Romi Muharyono, S.Ag.">Romi Muharyono, S.Ag.</option>
+                        <option value="Ary Herijanto, M.M.Si.">Ary Herijanto, M.M.Si.</option>
+                        <option value="Dega Surono Wibowo, S.T., M.Kom.">Dega Surono Wibowo, S.T., M.Kom.</option>
+                        <option value="M. Nishom, M.Kom.">M. Nishom, M.Kom.</option>
+                        <option value="Firdaus Nur Sugiarto, S.Tr.Kom. .">Firdaus Nur Sugiarto, S.Tr.Kom. .</option>
+                        <option value="Taufiq Abidin, M.Kom.">Taufiq Abidin, M.Kom.</option>
+                        <option value="Slamet Wiyono, M.Eng.">Slamet Wiyono, M.Eng.</option>
+                        <option value="Dyah Apriliani, S.T., M.Kom.">Dyah Apriliani, S.T., M.Kom.</option>
+                        <option value="Prasetyo Budi Mulyo, S.Sos.">Prasetyo Budi Mulyo, S.Sos.</option>
+                        <option value="Rosid Mustafa, M.Kom.">Rosid Mustafa, M.Kom.</option>
+                        <option value="Hendrawan Aprilia A, S.T.">Hendrawan Aprilia A, S.T.</option>
+                        <option value="Sharfina Handayani, M.Kom.">Sharfina Handayani, M.Kom.</option>
+                        <option value="Priyanto Tamami, S.Kom.">Priyanto Tamami, S.Kom.</option>
+                        <option value="Ardi Susanto, S.Kom., M.Cs.">Ardi Susanto, S.Kom., M.Cs.</option>
+                        <option value="M. Fikri Hidayatullah, S.T., M.Kom.">M. Fikri Hidayatullah, S.T., M.Kom.
+                        </option>
+                        <option value="Dwi Intan Af'idah, S.T., M.Kom.">Dwi Intan Af'idah, S.T., M.Kom.</option>
+                        <option value="Hepatika Zidny Ilmadina, S.Pd., M.Kom.">Hepatika Zidny Ilmadina, S.Pd.,
+                            M.Kom.
+                        </option>
+                    </select>
+
+                    <!-- <form action="{{ url_for('predict')}}" method="POST"> -->
+                    <br>
+                    <p>Kritik dan Saran</p>
+                    <textarea name="message" rows="4" cols="50" required></textarea>
+                    <br />
+
+                    <input type="submit" class="btn-info" value="Kirim">
+
+            </form>
+
+        </div>
+
+        <p style="font-size: 1.2em; margin-top: 10px;"> {{ prediction_text }} </p>
+    </div>
+    <!-- Card Light -->
+    <div class="card bg-light">
+        <div class="card-header">Hasil dari Penilaian yang kamu berikan</div>
+        <div class="card-body">
+            <center>
+                <h4 class="card-title">
+                    {% if prediction == 0%}
+                    <h2 style="color:red;">Kurang</h2>
+                    {% elif prediction == 1%}
+                    <h2 style="color:rgb(0, 162, 255);">Cukup</h2>
+                    {% elif prediction == 2%}
+                    <h2 style="color:rgb(0, 255, 21);">Baik</h2>
+                    {% elif prediction == 3%}
+                    <h2 style="color:blue;">Sangat Baik</h2>
+                    {% endif %}
+                </h4>
+            </center>
+            <!-- <p class="card-text">The Card body with information.</p> -->
+        </div>
+    </div>
+    <!-- <div class="results">
+
+
+
+        {% if prediction == 0%}
+        <h2 style="color:red;">Hasil dari Penilaian yang kamu berikan adalah Kurang</h2>
+        {% elif prediction == 1%}
+        <h2 style="color:rgb(0, 162, 255);">Hasil dari Penilaian yang kamu berikan adalah Cukup</h2>
+        {% elif prediction == 2%}
+        <h2 style="color:rgb(0, 255, 21);">Hasil dari Penilaian yang kamu berikan adalah Baik</h2>
+        {% elif prediction == 3%}
+        <h2 style="color:blue;">Hasil dari Penilaian yang kamu berikan Sangat Baik</h2>
+        {% endif %}
+
+    </div> -->
+
+
+
+
+    <!-- /.container-fluid -->
+
+    <!-- Sticky Footer -->
+    {% include 'footer.html' %}
+
+    </div>
+    <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+</body>
+
+</html>
