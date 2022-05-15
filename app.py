@@ -18,14 +18,15 @@ from sklearn import svm
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 from sqlalchemy import create_engine
+import warnings
 
-
+warnings.filterwarnings('ignore')
 app = Flask(__name__)
 app.secret_key = 'esmeraldabloodfreeze'
 # database
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/data-edom'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///edom.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://ymeixwlzmrdzqt:bfbb322ed081b4bd3fc8dbfc7aaf6e5706311b413525f0a76e58faf5d27821de@ec2-44-196-223-128.compute-1.amazonaws.com:5432/d6v8etpsv0kql7'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///edom.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://ymeixwlzmrdzqt:bfbb322ed081b4bd3fc8dbfc7aaf6e5706311b413525f0a76e58faf5d27821de@ec2-44-196-223-128.compute-1.amazonaws.com:5432/d6v8etpsv0kql7'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 admin = Admin(app, name='Klasifikasi Emosi', template_mode='bootstrap4')
@@ -143,10 +144,11 @@ cv = TfidfVectorizer()
 X = cv.fit_transform(X)  # Fit the Data
 X = pd.concat([data['body_len'], data['punct%'],
                pd.DataFrame(X.toarray())], axis=1)
-#X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42)
 # Using Classifier
 clf = svm.SVC(C=1, gamma=1, kernel='linear')
-clf.fit(X, y)
+clf.fit(X_train, y_train)
 
 semester_matakuliah = {
     'Semester 1': ['Kalkulus', 'Perangkat Keras Komputer', 'Aplikasi Perkantoran', "Bahasa Inggris 1", 'Pendidikan Agama', "Logika Informatika", 'Algoritma dan Struktur Data'],
