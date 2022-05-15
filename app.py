@@ -24,7 +24,8 @@ app = Flask(__name__)
 app.secret_key = 'esmeraldabloodfreeze'
 # database
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/data-edom'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///edom.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///edom.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://ymeixwlzmrdzqt:bfbb322ed081b4bd3fc8dbfc7aaf6e5706311b413525f0a76e58faf5d27821de@ec2-44-196-223-128.compute-1.amazonaws.com:5432/d6v8etpsv0kql7'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 admin = Admin(app, name='Klasifikasi Emosi', template_mode='bootstrap4')
@@ -118,11 +119,12 @@ def count_punct(text):
 
 
 # Modeling
-data = pd.read_csv("data - edom.csv")
+data = pd.read_csv("datx.csv")
 data.columns = ["Kritik dan Saran", "Klasifikasi"]
 # Features and Labels
-data['label'] = data['Klasifikasi'].map(
-    {'Kurang': 0, 'Cukup': 1, 'Baik': 2, 'Sangat Baik': 3})
+data['label'] = data['Klasifikasi']
+# .map(
+#     {'Kurang': 0, 'Cukup': 1, 'Baik': 2, 'Sangat Baik': 3})
 data['tidy_tweet'] = np.vectorize(remove_pattern)(
     data['Kritik dan Saran'], "@[\w]*")
 tokenized_tweet = data['tidy_tweet'].apply(lambda x: x.split())
