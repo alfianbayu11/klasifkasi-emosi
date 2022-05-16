@@ -20,6 +20,7 @@ import MySQLdb.cursors
 from sqlalchemy import create_engine
 import warnings
 
+
 warnings.filterwarnings('ignore')
 app = Flask(__name__)
 app.secret_key = 'esmeraldabloodfreeze'
@@ -42,7 +43,7 @@ class formedom(db.Model):
 
 
 class UserView(ModelView):
-    can_delete = False  # disable model deletion
+    can_delete = True  # disable model deletion
     can_export = True
 
 
@@ -107,47 +108,60 @@ admin.add_view(Logout(name='Logout', endpoint='Logout'))
 # Definitions
 
 
-def remove_pattern(input_txt, pattern):
-    r = re.findall(pattern, input_txt)
-    for i in r:
-        input_txt = re.sub(i, '', input_txt)
-    return input_txt
+# def remove_pattern(input_txt, pattern):
+#     r = re.findall(pattern, input_txt)
+#     for i in r:
+#         input_txt = re.sub(i, '', input_txt)
+#     return input_txt
 
 
-def count_punct(text):
-    count = sum([1 for char in text if char in string.punctuation])
-    return round(count/(len(text) - text.count(" ")), 3)*100
+# def count_punct(text):
+#     count = sum([1 for char in text if char in string.punctuation])
+#     return round(count/(len(text) - text.count(" ")), 3)*100
 
 
 # Modeling
-data = pd.read_csv("datx.csv")
-data.columns = ["Kritik dan Saran", "Klasifikasi"]
+# data = pd.read_csv("datx.csv")
+# data.columns = ["Kritik dan Saran", "Klasifikasi"]
+# # Features and Labels
+# data['label'] = data['Klasifikasi']
+# # .map(
+# #     {'Kurang': 0, 'Cukup': 1, 'Baik': 2, 'Sangat Baik': 3})
+# data['tidy_tweet'] = np.vectorize(remove_pattern)(
+#     data['Kritik dan Saran'], "@[\w]*")
+# tokenized_tweet = data['tidy_tweet'].apply(lambda x: x.split())
+# stemmer = PorterStemmer()
+# tokenized_tweet = tokenized_tweet.apply(lambda x: [stemmer.stem(i) for i in x])
+# for i in range(len(tokenized_tweet)):
+#     tokenized_tweet[i] = ' '.join(tokenized_tweet[i])
+# data['tidy_tweet'] = tokenized_tweet
+# data['body_len'] = data['Kritik dan Saran'].apply(
+#     lambda x: len(x) - x.count(" "))
+# data['punct%'] = data['Kritik dan Saran'].apply(lambda x: count_punct(x))
+# X = data['tidy_tweet']
+# y = data['label']
+# # Extract Feature With CountVectorizer
+# cv = TfidfVectorizer()
+# X = cv.fit_transform(X)  # Fit the Data
+# X = pd.concat([data['body_len'], data['punct%'],
+#                pd.DataFrame(X.toarray())], axis=1)
+# X_train, X_test, y_train, y_test = train_test_split(
+#     X, y, test_size=0.3, random_state=42)
+# # Using Classifier
+# clf = svm.SVC(C=1, gamma=1, kernel='linear')
+# clf.fit(X_train, y_train)
+data = pd.read_csv('datacleans.csv')
 # Features and Labels
 data['label'] = data['Klasifikasi']
-# .map(
-#     {'Kurang': 0, 'Cukup': 1, 'Baik': 2, 'Sangat Baik': 3})
-data['tidy_tweet'] = np.vectorize(remove_pattern)(
-    data['Kritik dan Saran'], "@[\w]*")
-tokenized_tweet = data['tidy_tweet'].apply(lambda x: x.split())
-stemmer = PorterStemmer()
-tokenized_tweet = tokenized_tweet.apply(lambda x: [stemmer.stem(i) for i in x])
-for i in range(len(tokenized_tweet)):
-    tokenized_tweet[i] = ' '.join(tokenized_tweet[i])
-data['tidy_tweet'] = tokenized_tweet
-data['body_len'] = data['Kritik dan Saran'].apply(
-    lambda x: len(x) - x.count(" "))
-data['punct%'] = data['Kritik dan Saran'].apply(lambda x: count_punct(x))
-X = data['tidy_tweet']
+
+X = data['Kritik dan Saran'].fillna(' ')
 y = data['label']
-# Extract Feature With CountVectorizer
-cv = TfidfVectorizer()
-X = cv.fit_transform(X)  # Fit the Data
-X = pd.concat([data['body_len'], data['punct%'],
-               pd.DataFrame(X.toarray())], axis=1)
+cv = TfidfVectorizer(ngram_range=(1, 3), max_features=3000)
+X = cv.fit_transform(X)
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.3, random_state=42)
+    X, y, test_size=0.4, random_state=42)
 # Using Classifier
-clf = svm.SVC(C=1, gamma=1, kernel='linear')
+clf = svm.SVC(C=1000, gamma=0.001, kernel='linear')
 clf.fit(X_train, y_train)
 
 semester_matakuliah = {
@@ -187,21 +201,6 @@ def login():
     else:
         return render_template('login.html')
 
-    # if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
-    #     username = request.form['username']
-    #     password = request.form['password']
-    #     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    #     cursor.execute('SELECT * FROM accounts WHERE username = % s AND password = % s', (username, password, ))
-    #     account = cursor.fetchone()
-    #     if account:
-    #         session['loggedin'] = True
-    #         session['id'] = account['id']
-    #         session['username'] = account['username']
-    #         return render_template('index.html')
-    #     else:
-    #         msg = 'Incorrect username / password !'
-    # return render_template('login.html')
-
 
 @app.route('/logout')
 def logout():
@@ -227,12 +226,13 @@ def predict():
         dosen = request.form['dosen']
         message = request.form['message']
         data = [message]
-        vect = pd.DataFrame(cv.transform(data).toarray())
-        body_len = pd.DataFrame([len(data) - data.count(" ")])
-        punct = pd.DataFrame([count_punct(data)])
-        total_data = pd.concat([body_len, punct, vect], axis=1)
-        my_prediction = clf.predict(total_data)
-        prediction = my_prediction
+        vect = cv.transform(data).toarray()
+        # vect = pd.DataFrame(cv.transform(data).toarray())
+        # body_len = pd.DataFrame([len(data) - data.count(" ")])
+        # punct = pd.DataFrame([count_punct(data)])
+        # total_data = pd.concat([body_len, punct, vect], axis=1)
+        # my_prediction = clf.predict(total_data)
+        prediction = clf.predict(vect)
     # cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     # cursor.execute(
     #     'INSERT INTO edom VALUES (NULL, % s,% s , % s, % s, % s)', (semester, dosen, mk, message, int(predict)))
@@ -243,7 +243,7 @@ def predict():
     db.session.add(predict)
     db.session.commit()
 
-    return render_template('index.html', prediction=my_prediction)
+    return render_template('index.html', prediction=prediction)
 
 
 @app.route('/submit', methods=['GET', 'POST'])
@@ -266,4 +266,4 @@ def submit():
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=4000)
+    app.run()
